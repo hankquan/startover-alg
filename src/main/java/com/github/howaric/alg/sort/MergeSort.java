@@ -88,3 +88,89 @@ public class MergeSort {
     }
 
 }
+
+//小和问题
+//求一列数，每个数左边比这个数小的所有数累加之和
+class MinSumProblem {
+
+    public static void main(String[] args) {
+        int[] array = ArrayGenerator.randomArray();
+        System.out.println(Arrays.toString(array));
+        int sum = minSum(array);
+        System.out.println(sum);
+        System.out.println(Arrays.toString(array));
+    }
+
+    private static int minSum(int[] array) {
+        if (array == null || array.length < 2) {
+            return 0;
+        }
+        return process(array, 0, array.length - 1);
+    }
+
+    private static int process(int[] array, int L, int R) {
+        if (L == R) {
+            return 0;
+        }
+        int M = L + (R - L) / 2;
+        return process(array, L, M) + process(array, M + 1, R) + merge(array, L, M, R);
+    }
+
+    private static int merge(int[] array, int L, int M, int R) {
+        int[] temp = new int[R - L + 1];
+        int index = 0;
+        int indexL = L;
+        int indexR = M + 1;
+        int sum = 0;
+        while (indexL <= M && indexR <= R) {
+            if (array[indexL] < array[indexR]) {
+                sum += ((R - indexR + 1) * array[indexL]);
+                temp[index++] = array[indexL++];
+            } else {
+                temp[index++] = array[indexR++];
+            }
+        }
+        while (indexL <= M) {
+            temp[index++] = array[indexL++];
+        }
+        while (indexR <= R) {
+            temp[index++] = array[indexR++];
+        }
+        for (int i = 0; i < temp.length; i++) {
+            array[L + i] = temp[i];
+        }
+        return sum;
+    }
+}
+
+//逆序对之和
+class ReversePairProblem {
+
+}
+
+//num的右边有多少个数乘以2之后依然小于这个数，求总个数和
+class DoubleMinProblem {
+
+}
+
+//leetcode-327
+//给定一个数组array，两个整数lower和upper
+//返回array中有多少个子数组的累加和在[lower,upper]范围上
+//解法1：前缀和数组，mergesort
+//解法2：有序表
+class CountRangeSumProblem {
+
+    public static void main(String[] args) {
+        int lower = 0;
+        int upper = 0;
+        int[] array = ArrayGenerator.randomArray();
+        int countRangeSum = countRangeSum(array, lower, upper);
+        System.out.println(countRangeSum);
+    }
+
+    private static int countRangeSum(int[] array, int lower, int upper) {
+
+        return 0;
+    }
+
+}
