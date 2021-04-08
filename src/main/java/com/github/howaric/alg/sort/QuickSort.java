@@ -3,6 +3,7 @@ package com.github.howaric.alg.sort;
 import com.github.howaric.alg.util.ArrayGenerator;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 //时间复杂度期望：O(N*logN)~O(N2)，期望：O(N*logN)
 //额外空间复杂度：O(logN)~O(N)，期望：O(logN)
@@ -20,13 +21,9 @@ public class QuickSort {
         int[] array3 = Arrays.copyOfRange(array, 0, array.length);
         quickSortV3(array3);
         System.out.println(Arrays.toString(array3));
-
-//        HashSet<Integer> hashSet = new HashSet<>();
-//        for (int i = 0; i < 100000; i++) {
-//            int x = 6 + (int) ((10 - 6) * Math.random());
-//            hashSet.add(x);
-//        }
-//        System.out.println(hashSet);
+        int[] array4 = Arrays.copyOfRange(array, 0, array.length);
+        quickSortV4(array4);
+        System.out.println(Arrays.toString(array4));
     }
 
     //<=  |  >
@@ -108,10 +105,43 @@ public class QuickSort {
         return new int[]{lt + 1, gt};
     }
 
+    static class Op {
+        int l;
+        int r;
+
+        public Op(int l, int r) {
+            this.l = l;
+            this.r = r;
+        }
+    }
+
     //非递归版本
     private static void quickSortV4(int[] array) {
-
+        if (array == null || array.length < 2) {
+            return;
+        }
+        int N = array.length;
+        swap(array, (int) (N * Math.random()), N - 1);
+        int[] flagLeftMidRight = netherlandsFlagLeftMidRight(array, 0, N - 1);
+        int lt = flagLeftMidRight[0];
+        int rt = flagLeftMidRight[1];
+        Stack<Op> stack = new Stack<>();
+        stack.push(new Op(0, lt - 1));
+        stack.push(new Op(rt + 1, N - 1));
+        while (!stack.isEmpty()) {
+            Op op = stack.pop();
+            if (op.l < op.r) {
+                int x = op.l + (int) ((op.r - op.l + 1) * Math.random());
+                swap(array, x, op.r);
+                int[] leftMidRight = netherlandsFlagLeftMidRight(array, op.l, op.r);
+                lt = leftMidRight[0];
+                rt = leftMidRight[1];
+                stack.push(new Op(op.l, lt - 1));
+                stack.push(new Op(rt + 1, op.r));
+            }
+        }
     }
+
 
     private static void swap(int[] array, int i, int j) {
         if (i == j) {
