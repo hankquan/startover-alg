@@ -22,6 +22,15 @@ public class ArrayGenerator {
         return generateRandomArray(maxValue, size);
     }
 
+    public static int[] randomPositiveArray() {
+        return randomPositiveArray(100, 10);
+    }
+
+    public static int[] randomPositiveArray(int maxSize, int maxValue) {
+        int size = (int) ((maxSize + 1) * Math.random());
+        return generatePositiveRandomArray(maxValue, size);
+    }
+
     public static int[] randomArrayWithFixSize(int size) {
         return generateRandomArray(100, size);
     }
@@ -40,6 +49,14 @@ public class ArrayGenerator {
         int[] result = new int[size];
         for (int i = 0; i < size; i++) {
             result[i] = (int) ((maxValue + 1) * Math.random()) - (int) ((maxValue) * Math.random());
+        }
+        return result;
+    }
+
+    private static int[] generatePositiveRandomArray(int maxValue, int size) {
+        int[] result = new int[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = (int) ((maxValue) * Math.random());
         }
         return result;
     }

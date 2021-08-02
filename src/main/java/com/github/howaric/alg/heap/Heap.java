@@ -13,6 +13,7 @@ public class Heap {
         minHeap.add(5);
         minHeap.traverse();
         System.out.println(minHeap.poll());
+        minHeap.traverse();
         System.out.println(minHeap.size());
     }
 
@@ -61,13 +62,13 @@ class MinHeap {
         int left = index << 1 + 1;
         //要判断是否越界
         while (left < size) {
-            int largerChild = left + 1 < size && data[left] > data[left + 1] ? left : left + 1;
-            int maxIndex = data[index] > data[largerChild] ? index : largerChild;
-            if (maxIndex == index) {
+            int smaller = left + 1 < size && data[left] < data[left + 1] ? left : left + 1;
+            int min = data[index] < data[smaller] ? index : smaller;
+            if (min == index) {
                 break;
             }
-            swap(data, maxIndex, index);
-            index = maxIndex;
+            swap(data, min, index);
+            index = min;
             left = index << 1 + 1;
         }
     }
